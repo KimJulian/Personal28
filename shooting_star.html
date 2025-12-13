@@ -20,17 +20,6 @@
             background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
         }
 
-        .shooting_star {
-            position: absolute;
-            height: 5px;
-            background: linear-gradient(-45deg,
-                    #ffffff,
-                    #7aa2ff,
-                    rgba(0, 0, 255, 0)
-                    );
-            border-radius: 999px;
-            filter: drop-shadow(0 0 15px #9abaff);
-        }
 
         /* 🌙 MOON */
 
@@ -129,7 +118,7 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            height: 5px;
+            height: 4px;
             background: linear-gradient(-45deg, #5f91ff, rgba(0, 0, 255, 0));
             border-radius: 999px;
             filter: drop-shadow(0 0 15px #699bff);
@@ -141,24 +130,24 @@
         .shooting_star::after {
             content: '';
             position: absolute;
-            top: 50%;
+            top: calc(50% - 1px);
             right: 0;
             transform: translateY(-50%);
-            height: 2px;
+            height: 4px;
             background: linear-gradient(-45deg,
                     rgba(0, 0, 255, 0),
                     #5f91ff,
                     rgba(0, 0, 255, 0));
             border-radius: 100%;
-            animation: shining 3s ease-in-out infinite;
+            animation: shining 2s ease-in-out infinite;
         }
 
         .shooting_star::after {
-            transform: translateY(-50%) rotateZ(-45deg);
+            transform: rotateZ(-45deg);
         }
 
         .shooting_star::before {
-            transform: translateY(-50%) rotateZ(45deg);
+            transform: rotateZ(45deg);
         }
 
         @keyframes tail {
@@ -167,7 +156,7 @@
             }
 
             30% {
-                width: 250px;
+                width: 100px;
             }
 
             100% {
@@ -181,7 +170,7 @@
             }
 
             50% {
-                width: 60px;
+                width: 30px;
             }
 
             100% {
