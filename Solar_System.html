@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scaled Solar System with Moons</title>
+<title>Realistic Solar System</title>
 <style>
   body {
     margin: 0;
@@ -17,29 +17,29 @@
 
   .solar-system {
     position: relative;
-    width: 2000px; /* 2x bigger container */
+    width: 2000px;
     height: 2000px;
   }
 
+  /* Sun with multiple gradient layers for depth */
   .sun {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200px; /* 2x bigger */
+    width: 200px;
     height: 200px;
     margin-left: -100px;
     margin-top: -100px;
-    background: radial-gradient(circle, #FFD700, #FFA500);
     border-radius: 50%;
-    box-shadow: 0 0 100px #FFD700;
-    z-index: 10;
+    background: radial-gradient(circle at 30% 30%, #fff200 0%, #ffae00 50%, #ff4500 100%);
+    box-shadow: 0 0 150px #ffae00, 0 0 300px #ff4500 inset;
   }
 
   .orbit {
     position: absolute;
     top: 50%;
     left: 50%;
-    border: 4px dashed rgba(255, 255, 255, 0.3); /* thicker for visibility */
+    border: 4px dashed rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     transform: translate(-50%, -50%);
   }
@@ -59,15 +59,81 @@
     transform: translate(-50%, -50%);
   }
 
-  /* Planets sizes & colors doubled */
-  .mercury { width: 40px; height: 40px; background: #aaa; }
-  .venus { width: 56px; height: 56px; background: #f5deb3; }
-  .earth { width: 64px; height: 64px; background: #00f; }
-  .mars { width: 48px; height: 48px; background: #f00; }
-  .jupiter { width: 120px; height: 120px; background: #d2691e; }
-  .saturn { width: 104px; height: 104px; background: #f4a460; z-index: 2; }
+  /* Mercury */
+  .mercury {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 30% 30%, #bbb 0%, #888 60%, #666 100%);
+  }
 
-  /* Saturn's ring doubled */
+  /* Venus */
+  .venus {
+    width: 56px;
+    height: 56px;
+    background: radial-gradient(circle at 30% 30%, #f5deb3 0%, #d2b48c 60%, #a0522d 100%);
+  }
+
+  /* Earth with clouds and ocean/land */
+  .earth {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #3399ff 0%, #0066cc 60%, #003366 100%);
+    box-shadow: 0 0 20px rgba(0,0,255,0.4);
+  }
+  .earth::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+    mix-blend-mode: overlay;
+  }
+
+  /* Mars with subtle craters */
+  .mars {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #f08080 0%, #b22222 60%, #800000 100%);
+    box-shadow: 0 0 15px rgba(255,0,0,0.4);
+  }
+  .mars::after {
+    content:'';
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(0,0,0,0.1) 2%, transparent 10%) repeat;
+    background-size:10px 10px;
+  }
+
+  /* Jupiter with storm bands */
+  .jupiter {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: repeating-linear-gradient(
+      0deg,
+      #d2b48c,
+      #d2b48c 5px,
+      #a0522d 5px,
+      #a0522d 10px
+    );
+    box-shadow: 0 0 30px rgba(210,180,140,0.4);
+  }
+
+  /* Saturn with subtle rings */
+  .saturn {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #f4a460 0%, #d2691e 60%, #8b4513 100%);
+    z-index: 2;
+    box-shadow: 0 0 25px rgba(244,164,96,0.4);
+  }
+
   .saturn-ring {
     position: absolute;
     top: 50%;
@@ -76,35 +142,32 @@
     height: 32px;
     margin-left: -100px;
     margin-top: -16px;
-    border: 2px solid rgba(200,200,200,0.7);
     border-radius: 50%;
     transform: rotateX(60deg);
-    z-index: 1; /* behind the planet */
+    z-index: 1; 
+    background: linear-gradient(to right, rgba(200,200,200,0.1) 0%, rgba(255,255,255,0.4) 50%, rgba(200,200,200,0.1) 100%);
   }
+
 </style>
 </head>
 <body>
 <div class="solar-system">
   <div class="sun"></div>
 
-  <!-- Mercury -->
   <div class="orbit" style="width: 320px; height: 320px;">
     <div class="planet mercury"></div>
   </div>
 
-  <!-- Venus -->
   <div class="orbit" style="width: 440px; height: 440px;">
     <div class="planet venus"></div>
   </div>
 
-  <!-- Earth with moon -->
   <div class="orbit" style="width: 560px; height: 560px;">
     <div class="planet earth">
       <div class="moon" style="width:20px; height:20px;"></div>
     </div>
   </div>
 
-  <!-- Mars with 2 moons -->
   <div class="orbit" style="width: 680px; height: 680px;">
     <div class="planet mars">
       <div class="moon" style="width:12px; height:12px;"></div>
@@ -112,7 +175,6 @@
     </div>
   </div>
 
-  <!-- Jupiter with 4 moons -->
   <div class="orbit" style="width: 840px; height: 840px;">
     <div class="planet jupiter">
       <div class="moon" style="width:12px; height:12px;"></div>
@@ -122,7 +184,6 @@
     </div>
   </div>
 
-  <!-- Saturn with ring and 3 moons -->
   <div class="orbit" style="width: 1000px; height: 1000px;">
     <div class="planet saturn">
       <div class="saturn-ring"></div>
@@ -144,7 +205,7 @@ let moonAngles = [];
 planets.forEach(p => {
   let moons = p.querySelectorAll('.moon');
   let anglesArr = [];
-  moons.forEach((m) => anglesArr.push(Math.random()*Math.PI*2));
+  moons.forEach(() => anglesArr.push(Math.random()*Math.PI*2));
   moonAngles.push(anglesArr);
 });
 
@@ -157,17 +218,15 @@ function animate() {
     planet.style.left = `calc(50% + ${x}px)`;
     planet.style.top = `calc(50% + ${y}px)`;
 
-    // Saturn ring rotation
     if(planet.classList.contains('saturn')) {
       ringAngle -= speeds[i] * 20;
       planet.querySelector('.saturn-ring').style.transform = `rotateX(60deg) rotateZ(${ringAngle}rad)`;
     }
 
-    // Animate moons
     let moons = planet.querySelectorAll('.moon');
     moons.forEach((moon, m) => {
       moonAngles[i][m] += 0.05 + m*0.01;
-      const orbitRadius = planet.offsetWidth/2 + 20 + m*20; // 2x orbit radius
+      const orbitRadius = planet.offsetWidth/2 + 20 + m*20;
       const mx = orbitRadius * Math.cos(moonAngles[i][m]);
       const my = orbitRadius * Math.sin(moonAngles[i][m]);
       moon.style.left = `${50 + mx}px`;
