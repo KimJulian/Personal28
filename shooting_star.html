@@ -1,192 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shooting Stars</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shooting Stars</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-    }
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+        }
 
-    /* 🌙 MOON */
+        /* 🌙 MOON */
 
-    .moon {
-      position: absolute;
-      top: 10%;
-      right: 15%;
-      width: 120px;
-      height: 120px;
-      background: #f5f3ce;
-      border-radius: 50%;
-      box-shadow: 0 0 40px rgba(255,255,200,0.8);
-      z-index: 1;
-    }
+        .moon {
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            width: 120px;
+            height: 120px;
+            background: #f5f3ce;
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(255, 255, 200, 0.8);
+            z-index: 1;
+        }
 
-    /* ☁️ CLOUDS */
+        /* ☁️ CLOUDS */
 
-    .cloud {
-      position: absolute;
-      bottom: 20%;
-      width: 300px;
-      height: 80px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 50px;
-      filter: blur(2px);
-      animation: moveClouds 60s linear infinite;
-    }
+        .cloud-layer {
+            position: absolute;
+            bottom: 40%;
+            width: 200%;
+            height: 120px;
+            display: flex;
+            z-index: 0;
+            animation: cloudLoop 80s linear infinite;
+        }
 
-    .cloud::before,
-    .cloud::after {
-      content: '';
-      position: absolute;
-      background: rgba(255, 255, 255, 0.08);
-      width: 150px;
-      height: 80px;
-      border-radius: 50%;
-      top: -40px;
-    }
+        .cloud-layer.slow {
+            bottom: 40%;
+            animation-duration: 120s;
+        }
 
-    .cloud::before {
-      left: 40px;
-    }
+        .cloud-layer.fast {
+            bottom: 15%;
+            animation-duration: 60s;
+        }
 
-    .cloud::after {
-      left: 120px;
-      top: -20px;
-    }
+        .cloud {
+            position: relative;
+            width: 260px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            filter: blur(2px);
 
-    .cloud.slow {
-      bottom: 30%;
-      animation-duration: 90s;
-    }
+            box-shadow:
+                60px -20px 0 20px rgba(255, 255, 255, 0.08),
+                120px 0px 0 10px rgba(255, 255, 255, 0.08),
+                180px -10px 0 15px rgba(255, 255, 255, 0.08);
+        }
 
-    .cloud.fast {
-      bottom: 15%;
-      animation-duration: 45s;
-    }
+        .cloud {
+            margin-right: 300px;
+        }
 
-    @keyframes moveClouds {
-      from { transform: translateX(-400px); }
-      to { transform: translateX(120vw); }
-    }
 
-    /* 🌠 SHOOTING STARS */
+        .cloud::before {
+            left: 40px;
+        }
 
-    .night {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform: rotateZ(45deg);
-    }
+        .cloud::after {
+            left: 120px;
+            top: -20px;
+        }
 
-    .shooting_star {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      height: 2px;
-      background: linear-gradient(-45deg, #5f91ff, rgba(0, 0, 255, 0));
-      border-radius: 999px;
-      filter: drop-shadow(0 0 6px #699bff);
-      animation: tail 3s ease-in-out infinite,
-                 shooting 3s ease-in-out infinite;
-    }
+        @keyframes cloudLoop {
+            from {
+                transform: translateX(0);
+            }
 
-    .shooting_star::before,
-    .shooting_star::after {
-      content: '';
-      position: absolute;
-      top: calc(50% - 1px);
-      right: 0;
-      height: 2px;
-      background: linear-gradient(-45deg,
-        rgba(0, 0, 255, 0),
-        #5f91ff,
-        rgba(0, 0, 255, 0));
-      border-radius: 100%;
-      animation: shining 3s ease-in-out infinite;
-    }
+            to {
+                transform: translateX(-50%);
+            }
+        }
 
-    .shooting_star::after {
-      transform: rotateZ(-45deg);
-    }
+        @keyframes moveClouds {
+            from {
+                transform: translateX(-400px);
+            }
 
-    .shooting_star::before {
-      transform: rotateZ(45deg);
-    }
+            to {
+                transform: translateX(120vw);
+            }
+        }
 
-    @keyframes tail {
-      0% { width: 0; }
-      30% { width: 100px; }
-      100% { width: 0; }
-    }
+        /* 🌠 SHOOTING STARS */
 
-    @keyframes shining {
-      0% { width: 0; }
-      50% { width: 30px; }
-      100% { width: 0; }
-    }
+        .night {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: rotateZ(45deg);
+        }
 
-    @keyframes shooting {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(300px); }
-    }
+        .shooting_star {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 2px;
+            background: linear-gradient(-45deg, #5f91ff, rgba(0, 0, 255, 0));
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px #699bff);
+            animation: tail 3s ease-in-out infinite,
+                shooting 3s ease-in-out infinite;
+        }
 
-    /* Individual star positions and delays */
-    .shooting_star:nth-child(1) {
-      top: 20%;
-      left: 30%;
-      animation-delay: 0s;
-    }
+        .shooting_star::before,
+        .shooting_star::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 1px);
+            right: 0;
+            height: 2px;
+            background: linear-gradient(-45deg,
+                    rgba(0, 0, 255, 0),
+                    #5f91ff,
+                    rgba(0, 0, 255, 0));
+            border-radius: 100%;
+            animation: shining 3s ease-in-out infinite;
+        }
 
-    .shooting_star:nth-child(2) {
-      top: 40%;
-      left: 60%;
-      animation-delay: 1s;
-    }
+        .shooting_star::after {
+            transform: rotateZ(-45deg);
+        }
 
-    .shooting_star:nth-child(3) {
-      top: 60%;
-      left: 20%;
-      animation-delay: 2s;
-    }
+        .shooting_star::before {
+            transform: rotateZ(45deg);
+        }
 
-    .shooting_star:nth-child(4) {
-      top: 80%;
-      left: 50%;
-      animation-delay: 3s;
-    }
+        @keyframes tail {
+            0% {
+                width: 0;
+            }
 
-    .shooting_star:nth-child(5) {
-      top: 10%;
-      left: 70%;
-      animation-delay: 4s;
-    }
-  </style>
+            30% {
+                width: 100px;
+            }
+
+            100% {
+                width: 0;
+            }
+        }
+
+        @keyframes shining {
+            0% {
+                width: 0;
+            }
+
+            50% {
+                width: 30px;
+            }
+
+            100% {
+                width: 0;
+            }
+        }
+
+        @keyframes shooting {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(300px);
+            }
+        }
+
+        /* Individual star positions and delays */
+        .shooting_star:nth-child(1) {
+            top: 20%;
+            left: 30%;
+            animation-delay: 0s;
+        }
+
+        .shooting_star:nth-child(2) {
+            top: 40%;
+            left: 60%;
+            animation-delay: 1s;
+        }
+
+        .shooting_star:nth-child(3) {
+            top: 60%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        .shooting_star:nth-child(4) {
+            top: 80%;
+            left: 50%;
+            animation-delay: 3s;
+        }
+
+        .shooting_star:nth-child(5) {
+            top: 10%;
+            left: 70%;
+            animation-delay: 4s;
+        }
+    </style>
 </head>
 
 <body>
     <div class="moon"></div>
 
-    <div class="cloud slow"></div>
-  <div class="cloud fast"></div>
-    
-  <div class="night">
-    <div class="shooting_star"></div>
-    <div class="shooting_star"></div>
-    <div class="shooting_star"></div>
-    <div class="shooting_star"></div>
-    <div class="shooting_star"></div>
-  </div>
+    <div class="cloud-layer slow">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+
+    <div class="cloud-layer fast">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+
+    <div class="night">
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+    </div>
 </body>
+
 </html>
